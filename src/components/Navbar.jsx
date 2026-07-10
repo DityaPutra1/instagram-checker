@@ -2,80 +2,236 @@ import {
   FaInstagram,
   FaSun,
   FaMoon,
-  FaDesktop,
-  FaCodeBranch,
   FaFileCsv,
   FaFileExcel,
+  FaCodeBranch,
+  FaBell,
 } from "react-icons/fa";
 
+import { useEffect, useState } from "react";
 import { useTheme } from "../context/ThemeContext";
 
 export default function Navbar() {
-  const { theme, toggleTheme } = useTheme();
+  const { isDark, toggleTheme } = useTheme();
 
-  const renderIcon = () => {
-    if (theme === "dark") return <FaSun />;
-    if (theme === "light") return <FaMoon />;
-    return <FaDesktop />;
-  };
+  const [time, setTime] = useState("");
+
+  useEffect(() => {
+    const update = () => {
+      const now = new Date();
+
+      setTime(
+        now.toLocaleTimeString("id-ID", {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        })
+      );
+    };
+
+    update();
+
+    const interval = setInterval(update, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <header className="sticky top-0 z-20 border-b border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950 transition-colors backdrop-blur-xl">
-
-      <div className="flex flex-col gap-5 px-6 py-5 lg:flex-row lg:items-center lg:justify-between">
+    <header
+      className="
+      sticky
+      top-0
+      z-30
+      backdrop-blur-xl
+      bg-white/80
+      dark:bg-slate-950/80
+      border-b
+      border-slate-200
+      dark:border-slate-800
+      transition
+    "
+    >
+      <div className="max-w-7xl mx-auto px-6 py-5 flex flex-col lg:flex-row items-center justify-between gap-5">
 
         {/* LEFT */}
+
         <div className="flex items-center gap-4">
 
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-pink-500 via-purple-500 to-orange-500 text-white text-xl shadow-md">
+          <div
+            className="
+            w-14
+            h-14
+            rounded-2xl
+            bg-gradient-to-br
+            from-pink-500
+            via-purple-500
+            to-orange-500
+            flex
+            items-center
+            justify-center
+            text-white
+            text-2xl
+            shadow-xl
+          "
+          >
             <FaInstagram />
           </div>
 
           <div>
-            <h1 className="text-xl font-bold text-gray-900 dark:text-white">
-              Instagram Insight Pro
-            </h1>
 
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              Instagram Analytics Dashboard
-            </p>
+           <div>
+  <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
+    Instagram Insight Pro
+  </h1>
+
+  <p className="text-sm text-slate-500 dark:text-slate-400">
+    Professional Analytics Dashboard
+  </p>
+
+  <a
+    href="https://instagram.com/pieditya"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="
+      mt-1
+      inline-flex
+      items-center
+      gap-1
+      text-xs
+      font-semibold
+      text-pink-500
+      hover:text-pink-600
+      dark:text-pink-400
+      dark:hover:text-pink-300
+      transition-all
+      duration-300
+      hover:translate-x-1
+    "
+  >
+    <FaInstagram className="text-sm" />
+    Created by <span className="font-bold">@pieditya</span>
+  </a>
+</div>
+
           </div>
 
         </div>
 
         {/* RIGHT */}
-        <div className="flex flex-wrap items-center justify-end gap-3">
 
-          {/* Compare */}
-          <button className="flex items-center gap-2 rounded-xl border border-cyan-200 dark:border-cyan-500/30 bg-cyan-50 dark:bg-cyan-500/10 px-4 py-2 text-sm font-medium text-cyan-600 dark:text-cyan-300 transition hover:opacity-80">
+        <div className="flex flex-wrap items-center gap-3">
+
+          <div
+            className="
+            hidden
+            lg:flex
+            px-4
+            py-2
+            rounded-xl
+            bg-slate-100
+            dark:bg-slate-900
+            font-semibold
+          "
+          >
+            {time}
+          </div>
+
+          <button
+            className="
+            flex
+            items-center
+            gap-2
+            rounded-xl
+            bg-cyan-500
+            hover:bg-cyan-600
+            px-4
+            py-3
+            text-white
+            transition
+          "
+          >
             <FaCodeBranch />
             Compare ZIP
           </button>
 
-          {/* CSV */}
-          <button className="flex items-center gap-2 rounded-xl border border-emerald-200 dark:border-emerald-500/30 bg-emerald-50 dark:bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-600 dark:text-emerald-300 transition hover:opacity-80">
+          <button
+            className="
+            flex
+            items-center
+            gap-2
+            rounded-xl
+            bg-emerald-500
+            hover:bg-emerald-600
+            px-4
+            py-3
+            text-white
+            transition
+          "
+          >
             <FaFileCsv />
             CSV
           </button>
 
-          {/* Excel */}
-          <button className="flex items-center gap-2 rounded-xl border border-green-200 dark:border-green-500/30 bg-green-50 dark:bg-green-500/10 px-4 py-2 text-sm font-medium text-green-600 dark:text-green-300 transition hover:opacity-80">
+          <button
+            className="
+            flex
+            items-center
+            gap-2
+            rounded-xl
+            bg-green-600
+            hover:bg-green-700
+            px-4
+            py-3
+            text-white
+            transition
+          "
+          >
             <FaFileExcel />
             Excel
           </button>
 
-          {/* THEME TOGGLE */}
+          <button
+            className="
+            relative
+            rounded-xl
+            p-3
+            bg-slate-100
+            dark:bg-slate-900
+          "
+          >
+            <FaBell />
+
+            <span
+              className="
+              absolute
+              top-2
+              right-2
+              w-2
+              h-2
+              rounded-full
+              bg-red-500
+            "
+            />
+          </button>
+
           <button
             onClick={toggleTheme}
-            className="flex h-11 w-11 items-center justify-center rounded-xl border border-gray-200 dark:border-white/10 bg-gray-100 dark:bg-white/5 text-yellow-500 dark:text-yellow-300 transition hover:scale-110"
-            title="Toggle Theme"
+            className="
+            rounded-xl
+            p-3
+            bg-slate-100
+            dark:bg-slate-900
+            transition
+            hover:scale-110
+          "
           >
-            {renderIcon()}
+            {isDark ? <FaSun /> : <FaMoon />}
           </button>
 
         </div>
 
       </div>
+
     </header>
   );
 }
